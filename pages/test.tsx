@@ -1,21 +1,28 @@
-import React, { Children, HtmlHTMLAttributes } from 'react'
+import React, { Children, HTMLAttributes, HtmlHTMLAttributes, ReactNode } from 'react'
 
+type style=<T>({}:HtmlHTMLAttributes<HTMLDivElement>|any)=>JSX.Element
 
+const Helli:style = (prop)=><div {...prop}
+ className={`${prop.blue? "bg-blue-700":"bg-pink-500"} w-14 h-16 `} />
+  
 
+const style ={
+  div:(x:{className:string}, attrs:HTMLAttributes<HTMLDivElement>)=>(prop)=><div {...prop} {...attrs} {...x} />
 
+}
 
-// const Hi=(attrs:HtmlHTMLAttributes<HTMLHeadingElement>)=><h1 {...attrs}></h1>
-function styled(attrs:any){return (()=>React.createElement("h1",{...attrs},null))}
-const Hello=styled({})
-
-const Hi=(x:any)=><h1 {...x} className=' bg-blue-700'/>
+const Hi = style.div({className:`bg-black ${attrs.blue &&""}`},{})
 
 
 const test = () => {
   return (
     <div>
-     <Hi >hello</Hi>
-     <Hello>hgjgh</Hello>
+     <Helli>
+       helo
+       <div>hihhfdsh </div>
+     </Helli>
+
+     <Hi>hi</Hi>
     </div>
   )
 }
