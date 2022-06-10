@@ -15,7 +15,6 @@ export default function RecentNews() {
     />
   ))
 
-  console.log(<FeedCard />)
   return (
     <div className="col-span-4 divide-y-2 divide-y-reverse md:col-span-3">
       RecentNews <MdRssFeed className="inline text-2xl text-themecolor1" />
