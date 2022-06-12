@@ -26,6 +26,30 @@
 			],
 			"description": "Create Tailwind styledComponent"
 		},
+		"Create Tailwind styledComponent and export": {
+			"scope": "javascript,typescript,javascriptreact,typescriptreact",
+			"prefix": "etw",
+			"body": [
+				"export const ${1:name}:${2:type}=(prop)=><${3:element}",
+				"{...prop}",
+				"className={`${0:css}`}/>"
+			],
+			"description": "Create Tailwind styledComponent and export"
+		},
+		"React component default export": {
+			"scope": "javascript,typescript,javascriptreact,typescriptreact",
+			"prefix": "rc",
+			"body": [
+				"const ${1:name}=(prop)=>{",
+				 "",
+				"return (",
+				"<${2:element}>${1:name}</${2:element}>",
+				")}",
+                 "",
+				"export default ${1:name}"
+			],
+			"description": "Create Tailwind styledComponent and default export"
+		},
 		"Add a fragment": {
 			"scope": "javascriptreact,typescriptreact",
 			"prefix": "<",
