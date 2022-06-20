@@ -1,53 +1,56 @@
-import { spawn } from 'child_process'
-import ReactDOM from "react-dom"
-import React, { Children, createElement, DetailedReactHTMLElement, InputHTMLAttributes, ReactNode, SyntheticEvent, useRef, useState } from 'react'
-import { userInfo } from 'os'
+import { randomUUID } from 'crypto'
+import { iteratorSymbol } from 'immer/dist/internal'
 
+import { HtmlProps } from 'next/dist/shared/lib/html-context'
+import React, { Attributes, Children, createElement, HtmlHTMLAttributes, ReactNode, SyntheticEvent, useRef, useState } from 'react'
 
 const test = () => {
-  const x=useRef<HTMLDivElement>(null)
-  const [state,setState]=useState(<div ref={x} contentEditable className='border-2 border-black' ></div>)
+  const [state,setState]=useState<{type:string,props:Attributes|null|undefined,children:ReactNode[]}[]>([{type:"div",props:{
+    key:Date.now().toString(),
+    id:"2",
+    onClick:(e:SyntheticEvent)=>changeState(e.currentTarget.id)
+  },children:["hi i am here"]}])
 
-  
-  state.
-  const useBold = () => {
-  // //  const el= window.getSelection()?.anchorNode?.parentElement
-  // //  if (el?.nodeName=="B") {
-  // //    return "bold"
+   const editor = state.map(item=>item? createElement(item.type,item.props,item.children):null)
+
+   const changeState=(id:string)=>{
+     console.log(id);
+     setState(state=>{
+
+       const newstate= state.map(item=>{
+        let newchil=item.children
+
+        if (item.props.id===id) {
+          newchil=item.children
+          newchil.push("i am pushed")
+          return (
+            {...item,children:newchil}
+          )
+        }else null;
+     })
+
+     console.log(newstate);
      
-  // //  }else(console.log("false")
-  // // )
-  // const el=x.current
-  //  const selstart=window.getSelection()?.getRangeAt(0).startOffset
-  //  const selend=window.getSelection()?.getRangeAt(0).endOffset
-  //  const selection=el?.innerHTML.substring(selstart,selend)
-  //  const textstart=el?.innerHTML.substring(0,selstart)
-  //  const textend=el?.innerHTML.substring(selend)
-  //  el.innerHTML=`<span>${textstart}</span><b>${selection}</b><span>${textend}</span>  `
 
-   console.log(state);
-   
-  }
-
-
-  const underline=()=>{
-    // const el= window.getSelection()?.anchorNode?.parentElement
-    // const selstart=window.getSelection()?.getRangeAt(0).startOffset
-    // const selend=window.getSelection()?.getRangeAt(0).endOffset
-    // const selection=el?.innerHTML.substring(selstart,selend)
-    // const textstart=el?.innerHTML.substring(0,selstart)
-    // const textend=el?.innerHTML.substring(selend)
-    // el.innerHTML=`<span>${textstart}</span><u>${selection}</u><span>${textend}</span>  `
-   }
+     return(
+       [...newstate]
+     )
+   })}
   
-
-
+  const logs=()=>{
+    // console.log(state);
+    
+  }
+  
   return (
     <>
-      {state}
-      <button className='btn' onClick={useBold}>Bold</button>
-      <button className='btn' onClick={underline}>underline</button>
+     <div  className='border-2 border-black h-20 w-full'>
+     {editor}
 
+     </div>
+     
+
+      <button className='btn' onClick={logs} >bold</button>
     </>
   )
 }
